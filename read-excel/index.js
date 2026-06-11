@@ -10,11 +10,6 @@ functions.http('readExcel', async (req, res) => {
   }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const apiKey = (req.headers['authorization'] || '').replace('Bearer ', '');
-  if (!process.env.API_KEY || apiKey !== process.env.API_KEY) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
   const { url, sheet, max_rows } = req.body || {};
   if (!url) return res.status(400).json({ error: 'Falta el campo "url"' });
 

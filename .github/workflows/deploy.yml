@@ -26,5 +26,4 @@ jobs:
           source_dir: read-excel
           entry_point: readExcel
           project_id: implementaciones-485812
-          environment_variables: API_KEY=${{ secrets.SERVIAM_API_KEY }}
           memory: 512Mi
