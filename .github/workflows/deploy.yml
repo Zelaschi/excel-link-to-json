@@ -1,0 +1,30 @@
+name: Deploy Cloud Functions
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-read-excel:
+    name: Deploy read-excel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - uses: google-github-actions/deploy-cloud-functions@v3
+        with:
+          name: serviam-read-excel
+          runtime: nodejs20
+          region: us-central1
+          source_dir: read-excel
+          entry_point: readExcel
+          project_id: implementaciones-485812
+          environment_variables: API_KEY=${{ secrets.SERVIAM_API_KEY }}
+          memory: 512Mi
